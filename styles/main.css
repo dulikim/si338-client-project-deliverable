@@ -90,8 +90,8 @@
    ---------------------------------------------------------------- */
 @media (prefers-color-scheme: dark) {
   :root {
-    --clr-primary: #4a8ac4;
-    --clr-primary-light: #6aaae4;
+    --clr-primary: #6bb3e0;
+    --clr-primary-light: #8ac4ea;
     --clr-secondary: #e0b44a;
     --clr-secondary-light: #f0d47a;
     --clr-accent: #5cb88a;
@@ -100,11 +100,27 @@
     --clr-text: #e4e4ec;
     --clr-text-muted: #9a9ab0;
     --clr-border: #2e2e44;
-    --clr-link: #6aaae4;
-    --clr-link-hover: #e0b44a;
+    --clr-link: #8ac4ea;
+    --clr-link-hover: #f0d47a;
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Nav, header, and footer need dark backgrounds for white text contrast */
+  #main-nav,
+  #athlete-nav,
+  #site-footer {
+    background: #0d1b2a;
+  }
+
+  .skip-link {
+    background: #0d1b2a;
+  }
+
+  header,
+  #athlete-header {
+    background: linear-gradient(135deg, #0d1b2a 0%, #162a45 100%);
   }
 }
 
@@ -503,7 +519,7 @@ section > h2::after {
   margin-top: var(--sp-sm);
   padding: var(--sp-xs) var(--sp-md);
   background: var(--clr-secondary);
-  color: var(--clr-text);
+  color: #1a1a2e;
   font-weight: 700;
   font-size: var(--fs-sm);
   text-decoration: none;
@@ -517,7 +533,7 @@ section > h2::after {
 .athlete-link:focus {
   background: var(--clr-secondary-light);
   transform: scale(1.05);
-  color: var(--clr-text);
+  color: #1a1a2e;
 }
 
 
@@ -606,7 +622,7 @@ select {
   width: 100%;
   padding: var(--sp-sm) var(--sp-lg);
   background: var(--clr-secondary);
-  color: var(--clr-text);
+  color: #1a1a2e;
   font-size: var(--fs-base);
   font-weight: 700;
   border: none;
