@@ -6,9 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ann Arbor Skyline</title>
   <link rel="stylesheet" href="styles/reset.css">
+  <link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <nav id="main-nav">
     <div class="nav-container">
@@ -24,7 +26,7 @@
     <h1>Ann Arbor Skyline</h1>
   </header>
 
-  <main>
+  <main id="main-content">
 
     <section id="team-roster">
       <h2>The Athletes</h2>
@@ -53,6 +55,7 @@
         <h3>Athlete Roster</h3>
         
     <div class="athlete-card"
+         tabindex="0"
          data-name="Garrett Comer"
          data-grade="11"
          data-sr="17:22.3"
@@ -256,6 +259,8 @@
       </p>
     </div>
   </footer>
+
+  <a href="#main-nav" class="back-to-top" aria-label="Back to top">&uarr;</a>
 
 </body>
 

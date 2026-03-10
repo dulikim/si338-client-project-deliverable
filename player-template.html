@@ -6,14 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{NAME}}</title>
   <link rel="stylesheet" href="../../styles/reset.css">
+  <link rel="stylesheet" href="../../styles/main.css">
 </head>
 
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <nav id="athlete-nav">
     <div class="nav-container">
       <span class="nav-title">Ann Arbor Skyline Athletes</span>
-      <a href="https://stefanjakov.github.io/si338-client-project-deliverable/" class="nav-link">
+      <a href="https://dulikim.github.io/si338-client-project-deliverable/" class="nav-link">
         Team page
       </a>
     </div>
@@ -41,7 +43,7 @@
     </article>
   </header>
 
-  <main>
+  <main id="main-content">
 
     <section id="athlete-results">
       <h2>Race Results</h2>
@@ -119,7 +121,7 @@
         <h3>Performance Graph</h3>
 
         <img src="{{PERFORMANCE_GRAPH}}" alt="Athlete performance progression graph"
-          aria-describedby="graph-description" style="max-width: 100%; height: auto;" />
+          aria-describedby="graph-description" />
       </article>
     </section>
 
@@ -150,6 +152,8 @@
       </p>
     </div>
   </footer>
+
+  <a href="#athlete-nav" class="back-to-top" aria-label="Back to top">&uarr;</a>
 
 </body>
 

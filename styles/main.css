@@ -1,0 +1,1036 @@
+/* ================================================================
+   Ann Arbor Skyline Cross Country — Main Stylesheet
+   Mobile-only design | SI 338 Deliverable 4
+
+   Contents:
+   1.  Custom Properties (Design Tokens)
+   2.  Dark Mode (prefers-color-scheme)
+   3.  Base Styles
+   4.  Accessibility Utilities
+   5.  Typography
+   6.  Links
+   7.  Navigation — Sticky Horizontal Scroll Tabs
+   8.  Header & Athlete Profile
+   9.  Main Layout & Sections
+   10. Athlete Roster Cards — 3D Flip Animation
+   11. Forms & Controls
+   12. Comparison Section
+   13. Tables — Card Reflow
+   14. Accomplishments — Animated Progress Bars
+   15. Gallery — Horizontal Scroll Snap
+   16. Performance Graph
+   17. Footer
+   18. Back-to-Top Floating Action Button
+   19. Keyframe Animations
+   20. Reduced Motion (prefers-reduced-motion)
+   ================================================================ */
+
+
+/* ----------------------------------------------------------------
+   1. Custom Properties — Light Mode (Default)
+   CSS variables for consistent theming and easy dark-mode toggling
+   ---------------------------------------------------------------- */
+:root {
+  --clr-primary: #1b3a5c;
+  --clr-primary-light: #2a5a8c;
+  --clr-secondary: #c8942a;
+  --clr-secondary-light: #e0b44a;
+  --clr-accent: #2d6a4f;
+  --clr-bg: #f4f1ec;
+  --clr-surface: #ffffff;
+  --clr-text: #1a1a2e;
+  --clr-text-muted: #5e5e72;
+  --clr-border: #d4d0ca;
+  --clr-link: #1b3a5c;
+  --clr-link-hover: #c8942a;
+
+  --font-heading: Georgia, 'Times New Roman', Times, serif;
+  --font-body: system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Responsive font sizes using clamp() — scales with viewport */
+  --fs-xs: clamp(0.7rem, 2.5vw, 0.8rem);
+  --fs-sm: clamp(0.8rem, 2.8vw, 0.875rem);
+  --fs-base: clamp(0.9rem, 3vw, 1rem);
+  --fs-md: clamp(1rem, 3.5vw, 1.125rem);
+  --fs-lg: clamp(1.25rem, 4vw, 1.5rem);
+  --fs-xl: clamp(1.5rem, 5vw, 2rem);
+  --fs-xxl: clamp(1.75rem, 6vw, 2.5rem);
+
+  --sp-xs: 0.25rem;
+  --sp-sm: 0.5rem;
+  --sp-md: 1rem;
+  --sp-lg: 1.5rem;
+  --sp-xl: 2rem;
+  --sp-xxl: 3rem;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-pill: 100vw;
+  --radius-circle: 50%;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08),
+               0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1),
+               0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12),
+               0 4px 8px rgba(0, 0, 0, 0.06);
+
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+  --dur-fast: 200ms;
+  --dur-normal: 350ms;
+  --dur-slow: 600ms;
+}
+
+
+/* ----------------------------------------------------------------
+   2. Dark Mode — Activates automatically via OS/browser preference
+   ---------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clr-primary: #4a8ac4;
+    --clr-primary-light: #6aaae4;
+    --clr-secondary: #e0b44a;
+    --clr-secondary-light: #f0d47a;
+    --clr-accent: #5cb88a;
+    --clr-bg: #121220;
+    --clr-surface: #1e1e32;
+    --clr-text: #e4e4ec;
+    --clr-text-muted: #9a9ab0;
+    --clr-border: #2e2e44;
+    --clr-link: #6aaae4;
+    --clr-link-hover: #e0b44a;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   3. Base Styles
+   ---------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background-color: var(--clr-border);
+}
+
+
+/* ----------------------------------------------------------------
+   4. Accessibility Utilities
+   ---------------------------------------------------------------- */
+
+/* Skip-to-content link: hidden off-screen until keyboard-focused */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--sp-md);
+  background: var(--clr-primary);
+  color: #fff;
+  padding: var(--sp-sm) var(--sp-md);
+  border-radius: var(--radius-sm);
+  z-index: 200;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top var(--dur-fast) var(--ease-out);
+}
+
+.skip-link:focus {
+  top: var(--sp-sm);
+}
+
+/* Screen-reader-only utility class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Visible focus ring for keyboard navigation */
+:focus-visible {
+  outline: 3px solid var(--clr-secondary);
+  outline-offset: 2px;
+}
+
+
+/* ----------------------------------------------------------------
+   5. Typography — Responsive sizing via clamp()
+   ---------------------------------------------------------------- */
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  color: var(--clr-primary);
+  line-height: 1.2;
+  margin-top: 0;
+}
+
+h1 { font-size: var(--fs-xxl); }
+h2 { font-size: var(--fs-xl); margin-bottom: var(--sp-lg); }
+h3 { font-size: var(--fs-lg); }
+
+p {
+  margin-top: 0;
+  margin-bottom: var(--sp-sm);
+}
+
+
+/* ----------------------------------------------------------------
+   6. Links
+   ---------------------------------------------------------------- */
+a {
+  color: var(--clr-link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+a:hover,
+a:focus {
+  color: var(--clr-link-hover);
+}
+
+
+/* ----------------------------------------------------------------
+   7. Navigation — Sticky bar with horizontally scrollable tabs
+   Stays fixed at top on scroll; tabs overflow-scroll on narrow screens
+   ---------------------------------------------------------------- */
+#main-nav,
+#athlete-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--clr-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  padding: var(--sp-sm) var(--sp-md);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.nav-container::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  padding: var(--sp-xs) var(--sp-sm);
+  border-radius: var(--radius-pill);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.nav-title {
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  white-space: nowrap;
+  margin-right: auto;
+}
+
+
+/* ----------------------------------------------------------------
+   8. Header — Gradient banner with team/athlete branding
+   ---------------------------------------------------------------- */
+header {
+  background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-light) 100%);
+  color: #fff;
+  padding: var(--sp-xl) var(--sp-md) var(--sp-lg);
+  text-align: center;
+}
+
+header h1 {
+  color: #fff;
+  margin-bottom: var(--sp-xs);
+  animation: fadeInDown var(--dur-slow) var(--ease-out) both;
+}
+
+/* Athlete page header */
+#athlete-header {
+  background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-light) 100%);
+  color: #fff;
+  padding: var(--sp-xl) var(--sp-md) var(--sp-lg);
+  text-align: center;
+}
+
+#athlete-header h1,
+#athlete-header h2 {
+  color: #fff;
+}
+
+#athlete-header .athlete-info h2 {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+  margin-bottom: var(--sp-sm);
+}
+
+/* Circular profile photo with gold border */
+.athlete-photo {
+  width: 7rem;
+  height: 7rem;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  border: 3px solid var(--clr-secondary);
+  box-shadow: var(--shadow-lg);
+  animation: fadeIn var(--dur-slow) var(--ease-out) both;
+}
+
+#athlete-header .athlete-photo {
+  width: 8rem;
+  height: 8rem;
+  margin: 0 auto var(--sp-md);
+}
+
+.athlete-school {
+  font-size: var(--fs-md);
+  opacity: 0.9;
+}
+
+#athlete-header .athlete-grade {
+  font-size: var(--fs-sm);
+  opacity: 0.85;
+  color: #fff;
+}
+
+#athlete-header a {
+  color: var(--clr-secondary-light);
+  font-size: var(--fs-sm);
+}
+
+/* Frosted glass records badge */
+.athlete-records {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+  margin-top: var(--sp-md);
+  padding: var(--sp-md);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.athlete-records .athlete-sr,
+.athlete-records .athlete-pr {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: #fff;
+}
+
+
+/* ----------------------------------------------------------------
+   9. Main Layout & Sections
+   ---------------------------------------------------------------- */
+main {
+  padding: 0 var(--sp-md);
+}
+
+section {
+  padding: var(--sp-xl) 0;
+  border-bottom: 1px solid var(--clr-border);
+  animation: fadeInUp var(--dur-slow) var(--ease-out) both;
+}
+
+section:last-child {
+  border-bottom: none;
+}
+
+/* Decorative gold underline accent beneath section headings */
+section > h2 {
+  text-align: center;
+  position: relative;
+  padding-bottom: var(--sp-sm);
+}
+
+section > h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3rem;
+  height: 3px;
+  background: var(--clr-secondary);
+  border-radius: var(--radius-pill);
+}
+
+/* Visually hide redundant sub-headings; section h2 provides context */
+#athlete-roster > h3,
+#team-accomplishments article > h3,
+#team-events article > h3,
+#athlete-results article > h3,
+#performance-graph article > h3,
+.gallery-grid > h3 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* ----------------------------------------------------------------
+   10. Athlete Roster Cards — 3D Flip Animation
+   Tap or keyboard-focus flips the card to reveal stats on the back
+   ---------------------------------------------------------------- */
+#athlete-roster {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+}
+
+.athlete-card {
+  perspective: 800px;
+  height: 18rem;
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform var(--dur-slow) var(--ease-in-out);
+  transform-style: preserve-3d;
+}
+
+/* Flip triggers: keyboard focus-within or JS-toggled class */
+.athlete-card:focus-within .card-inner,
+.athlete-card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-lg);
+}
+
+.card-front {
+  background: var(--clr-surface);
+  gap: var(--sp-md);
+}
+
+.card-front .athlete-name {
+  font-size: var(--fs-lg);
+  color: var(--clr-primary);
+  margin: 0;
+}
+
+.card-front .athlete-photo {
+  width: 7rem;
+  height: 7rem;
+}
+
+.card-back {
+  background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-light));
+  color: #fff;
+  transform: rotateY(180deg);
+  gap: var(--sp-xs);
+}
+
+.card-back .athlete-name {
+  font-size: var(--fs-lg);
+  color: #fff;
+  margin: 0;
+}
+
+.card-back p {
+  font-size: var(--fs-sm);
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* "View Profile" pill button on card back */
+.athlete-link {
+  display: inline-block;
+  margin-top: var(--sp-sm);
+  padding: var(--sp-xs) var(--sp-md);
+  background: var(--clr-secondary);
+  color: var(--clr-text);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  border-radius: var(--radius-pill);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.athlete-link:hover,
+.athlete-link:focus {
+  background: var(--clr-secondary-light);
+  transform: scale(1.05);
+  color: var(--clr-text);
+}
+
+
+/* ----------------------------------------------------------------
+   11. Forms & Controls — Sort, Filter, Compare
+   ---------------------------------------------------------------- */
+fieldset {
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-md);
+  background: var(--clr-surface);
+}
+
+legend {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  color: var(--clr-primary);
+  padding: 0 var(--sp-sm);
+}
+
+label {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  margin-bottom: var(--sp-xs);
+}
+
+select,
+input[type="text"],
+input[type="date"] {
+  width: 100%;
+  padding: var(--sp-sm) var(--sp-md);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-sm);
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  font-size: var(--fs-base);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+select:focus,
+input[type="text"]:focus,
+input[type="date"]:focus {
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 3px rgba(27, 58, 92, 0.15);
+  outline: none;
+}
+
+/* Custom dropdown arrow via inline SVG data URI */
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235e5e72' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--sp-sm) center;
+  padding-right: var(--sp-xl);
+}
+
+#sort-instructions,
+#comparison-instructions,
+#filter-instructions {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-muted);
+  margin-bottom: var(--sp-md);
+  font-style: italic;
+}
+
+.filter-group {
+  margin-bottom: var(--sp-md);
+}
+
+.filter-group:last-child {
+  margin-bottom: 0;
+}
+
+.comparison-select {
+  margin-bottom: var(--sp-md);
+}
+
+/* Compare button with subtle pulse glow */
+#compare-button {
+  width: 100%;
+  padding: var(--sp-sm) var(--sp-lg);
+  background: var(--clr-secondary);
+  color: var(--clr-text);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+  animation: subtlePulse 3s var(--ease-in-out) infinite;
+}
+
+#compare-button:hover,
+#compare-button:focus {
+  background: var(--clr-secondary-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+#compare-button:active {
+  transform: translateY(0);
+}
+
+
+/* ----------------------------------------------------------------
+   12. Comparison Section — Stacked athlete stat cards
+   ---------------------------------------------------------------- */
+#comparison-results > h3 {
+  text-align: center;
+  margin-bottom: var(--sp-md);
+}
+
+.comparison-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+  margin-bottom: var(--sp-lg);
+}
+
+.comparison-card {
+  background: var(--clr-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-lg);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  border-left: 4px solid var(--clr-secondary);
+  animation: slideInLeft var(--dur-slow) var(--ease-out) both;
+}
+
+.comparison-card:nth-child(2) {
+  animation-delay: 150ms;
+  border-left-color: var(--clr-accent);
+}
+
+.comparison-card img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: var(--radius-circle);
+  object-fit: cover;
+  margin: 0 auto var(--sp-sm);
+  border: 2px solid var(--clr-border);
+}
+
+.comparison-card h3 {
+  font-size: var(--fs-md);
+  margin-bottom: var(--sp-sm);
+}
+
+.comparison-card p {
+  font-size: var(--fs-sm);
+  color: var(--clr-text-muted);
+  margin: var(--sp-xs) 0;
+}
+
+.shared-meets {
+  margin-top: var(--sp-lg);
+}
+
+.shared-meets h3 {
+  text-align: center;
+  margin-bottom: var(--sp-md);
+}
+
+
+/* ----------------------------------------------------------------
+   13. Tables — Card Reflow Layout
+   Each <tr> becomes a stacked card; <td>::before labels use
+   nth-child selectors so no data-attributes are needed in HTML.
+   <thead> is visually hidden but stays accessible to screen readers.
+   ---------------------------------------------------------------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+tbody tr {
+  display: block;
+  background: var(--clr-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--sp-md);
+  margin-bottom: var(--sp-md);
+  border-left: 3px solid var(--clr-primary);
+  animation: fadeInUp var(--dur-normal) var(--ease-out) both;
+}
+
+/* Alternating accent colors on table-card left borders */
+tbody tr:nth-child(even) {
+  border-left-color: var(--clr-secondary);
+}
+
+tbody tr:nth-child(odd) {
+  border-left-color: var(--clr-accent);
+}
+
+tbody td {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-sm);
+  padding: var(--sp-xs) 0;
+  font-size: var(--fs-sm);
+  border: none;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+tbody td:last-child {
+  border-bottom: none;
+}
+
+/* Pseudo-element label styling shared across all tables */
+tbody td::before {
+  flex-shrink: 0;
+  width: 5.5rem;
+  font-weight: 700;
+  font-size: var(--fs-xs);
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* --- Team Events Table (#events-table) column labels --- */
+#events-table td:nth-child(1)::before { content: 'Race'; }
+#events-table td:nth-child(2)::before { content: 'Date'; }
+#events-table td:nth-child(3)::before { content: 'Place'; }
+#events-table td:nth-child(4)::before { content: 'Results'; }
+
+/* --- Athlete Race Results Table (#results-table) column labels --- */
+#results-table td:nth-child(1)::before { content: 'Race'; }
+#results-table td:nth-child(2)::before { content: 'Date'; }
+#results-table td:nth-child(3)::before { content: 'Location'; }
+#results-table td:nth-child(4)::before { content: 'Distance'; }
+#results-table td:nth-child(5)::before { content: 'Time'; }
+#results-table td:nth-child(6)::before { content: 'Place'; }
+#results-table td:nth-child(7)::before { content: 'Grade'; }
+#results-table td:nth-child(8)::before { content: 'Results'; }
+
+/* Hide the template placeholder row that was left in the data */
+#results-table tbody tr:first-child {
+  display: none;
+}
+
+/* --- Shared Meets Table column labels --- */
+.shared-meets td:nth-child(1)::before { content: 'Meet'; }
+.shared-meets td:nth-child(2)::before { content: 'Athlete A'; }
+.shared-meets td:nth-child(3)::before { content: 'Athlete B'; }
+
+
+/* ----------------------------------------------------------------
+   14. Team Accomplishments — Cards with Animated Progress Bars
+   ---------------------------------------------------------------- */
+#team-accomplishments ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+#team-accomplishments li {
+  background: var(--clr-surface);
+  padding: var(--sp-md);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  font-size: var(--fs-sm);
+  border-left: 3px solid var(--clr-secondary);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp var(--dur-normal) var(--ease-out) both;
+}
+
+/* Staggered entrance for each accomplishment */
+#team-accomplishments li:nth-child(1) { animation-delay: 100ms; }
+#team-accomplishments li:nth-child(2) { animation-delay: 200ms; }
+#team-accomplishments li:nth-child(3) { animation-delay: 300ms; }
+#team-accomplishments li:nth-child(4) { animation-delay: 400ms; }
+#team-accomplishments li:nth-child(5) { animation-delay: 500ms; }
+#team-accomplishments li:nth-child(6) { animation-delay: 600ms; }
+
+/* Decorative animated progress bar beneath each accomplishment */
+#team-accomplishments li::after {
+  content: '';
+  display: block;
+  height: 3px;
+  margin-top: var(--sp-sm);
+  background: linear-gradient(90deg, var(--clr-secondary), var(--clr-accent));
+  border-radius: var(--radius-pill);
+  transform-origin: left;
+  animation: progressFill 1.2s var(--ease-out) both;
+}
+
+#team-accomplishments li:nth-child(1)::after { animation-delay: 300ms; }
+#team-accomplishments li:nth-child(2)::after { animation-delay: 400ms; }
+#team-accomplishments li:nth-child(3)::after { animation-delay: 500ms; }
+#team-accomplishments li:nth-child(4)::after { animation-delay: 600ms; }
+#team-accomplishments li:nth-child(5)::after { animation-delay: 700ms; }
+#team-accomplishments li:nth-child(6)::after { animation-delay: 800ms; }
+
+/* Subtle press effect on touch */
+#team-accomplishments li:active {
+  transform: scale(0.98);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+
+/* ----------------------------------------------------------------
+   15. Gallery — Horizontal Scroll Snap Carousel
+   Images snap into center view as the user swipes horizontally
+   ---------------------------------------------------------------- */
+.gallery-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 85%;
+  gap: var(--sp-md);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--sp-md);
+  scrollbar-width: none;
+}
+
+.gallery-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-grid img {
+  scroll-snap-align: center;
+  border-radius: var(--radius-md);
+  height: 14rem;
+  object-fit: cover;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur-normal) var(--ease-out);
+}
+
+.gallery-grid img:active {
+  transform: scale(0.97);
+}
+
+
+/* ----------------------------------------------------------------
+   16. Performance Graph
+   ---------------------------------------------------------------- */
+#performance-graph {
+  text-align: center;
+}
+
+#performance-graph > div > p {
+  font-size: var(--fs-sm);
+  color: var(--clr-text-muted);
+  font-style: italic;
+}
+
+#performance-graph img {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  animation: fadeIn var(--dur-slow) var(--ease-out) both;
+}
+
+
+/* ----------------------------------------------------------------
+   17. Footer
+   ---------------------------------------------------------------- */
+#site-footer {
+  background: var(--clr-primary);
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  padding: var(--sp-lg) var(--sp-md);
+  margin-top: var(--sp-xl);
+}
+
+.footer-content p {
+  font-size: var(--fs-xs);
+  margin: 0;
+  line-height: 1.8;
+}
+
+#site-footer a {
+  color: var(--clr-secondary-light);
+}
+
+#site-footer a:hover,
+#site-footer a:focus {
+  color: #fff;
+}
+
+
+/* ----------------------------------------------------------------
+   18. Back-to-Top Floating Action Button
+   Fixed-position anchor that smooth-scrolls to the page top
+   ---------------------------------------------------------------- */
+.back-to-top {
+  position: fixed;
+  bottom: var(--sp-lg);
+  right: var(--sp-md);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: var(--clr-secondary);
+  color: var(--clr-text);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: var(--radius-circle);
+  box-shadow: var(--shadow-md);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.back-to-top:hover,
+.back-to-top:focus {
+  background: var(--clr-secondary-light);
+  transform: translateY(-2px);
+  color: var(--clr-text);
+}
+
+.back-to-top:active {
+  transform: translateY(0);
+}
+
+
+/* ----------------------------------------------------------------
+   19. Keyframe Animations
+   ---------------------------------------------------------------- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes progressFill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes subtlePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 148, 42, 0.4); }
+  50%      { box-shadow: 0 0 0 8px rgba(200, 148, 42, 0); }
+}
+
+
+/* ----------------------------------------------------------------
+   20. Reduced Motion — Disables all animations for users who
+   prefer it. Required for WCAG 2.1 Level AA compliance.
+   ---------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
