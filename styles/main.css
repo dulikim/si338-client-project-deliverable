@@ -43,6 +43,9 @@
   --clr-border: #d4d0ca;
   --clr-link: #1b3a5c;
   --clr-link-hover: #c8942a;
+  --clr-nav-bg: #1b3a5c;
+  --clr-header-start: #1b3a5c;
+  --clr-header-end: #2a5a8c;
 
   --font-heading: Georgia, 'Times New Roman', Times, serif;
   --font-body: system-ui, -apple-system, BlinkMacSystemFont,
@@ -102,25 +105,12 @@
     --clr-border: #2e2e44;
     --clr-link: #8ac4ea;
     --clr-link-hover: #f0d47a;
+    --clr-nav-bg: #0d1b2a;
+    --clr-header-start: #0d1b2a;
+    --clr-header-end: #162a45;
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
-  }
-
-  /* Nav, header, and footer need dark backgrounds for white text contrast */
-  #main-nav,
-  #athlete-nav,
-  #site-footer {
-    background: #0d1b2a;
-  }
-
-  .skip-link {
-    background: #0d1b2a;
-  }
-
-  header,
-  #athlete-header {
-    background: linear-gradient(135deg, #0d1b2a 0%, #162a45 100%);
   }
 }
 
@@ -165,7 +155,7 @@ img {
   position: absolute;
   top: -100%;
   left: var(--sp-md);
-  background: var(--clr-primary);
+  background: var(--clr-nav-bg);
   color: #fff;
   padding: var(--sp-sm) var(--sp-md);
   border-radius: var(--radius-sm);
@@ -244,7 +234,7 @@ a:focus {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: var(--clr-primary);
+  background: var(--clr-nav-bg);
   box-shadow: var(--shadow-md);
 }
 
@@ -295,7 +285,7 @@ a:focus {
    8. Header — Gradient banner with team/athlete branding
    ---------------------------------------------------------------- */
 header {
-  background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-light) 100%);
+  background: linear-gradient(135deg, var(--clr-header-start) 0%, var(--clr-header-end) 100%);
   color: #fff;
   padding: var(--sp-xl) var(--sp-md) var(--sp-lg);
   text-align: center;
@@ -309,7 +299,7 @@ header h1 {
 
 /* Athlete page header */
 #athlete-header {
-  background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-primary-light) 100%);
+  background: linear-gradient(135deg, var(--clr-header-start) 0%, var(--clr-header-end) 100%);
   color: #fff;
   padding: var(--sp-xl) var(--sp-md) var(--sp-lg);
   text-align: center;
@@ -496,7 +486,7 @@ section > h2::after {
 }
 
 .card-back {
-  background: linear-gradient(135deg, var(--clr-primary), var(--clr-primary-light));
+  background: linear-gradient(135deg, var(--clr-header-start), var(--clr-header-end));
   color: #fff;
   transform: rotateY(180deg);
   gap: var(--sp-xs);
@@ -919,7 +909,7 @@ tbody td::before {
    17. Footer
    ---------------------------------------------------------------- */
 #site-footer {
-  background: var(--clr-primary);
+  background: var(--clr-nav-bg);
   color: #fff;
   text-align: center;
   padding: var(--sp-lg) var(--sp-md);
@@ -957,7 +947,7 @@ tbody td::before {
   width: 2.75rem;
   height: 2.75rem;
   background: var(--clr-secondary);
-  color: var(--clr-text);
+  color: #1a1a2e;
   font-size: var(--fs-lg);
   font-weight: 700;
   text-decoration: none;
@@ -972,7 +962,7 @@ tbody td::before {
 .back-to-top:focus {
   background: var(--clr-secondary-light);
   transform: translateY(-2px);
-  color: var(--clr-text);
+  color: #1a1a2e;
 }
 
 .back-to-top:active {
