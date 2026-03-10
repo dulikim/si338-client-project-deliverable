@@ -374,11 +374,13 @@ header h1 {
    ---------------------------------------------------------------- */
 main {
   padding: 0 var(--sp-md);
+  background-color: var(--clr-bg);
 }
 
 section {
   padding: var(--sp-xl) 0;
   border-bottom: 1px solid var(--clr-border);
+  background-color: var(--clr-bg);
   animation: fadeInUp var(--dur-slow) var(--ease-out) both;
 }
 
