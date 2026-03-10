@@ -10,9 +10,9 @@
 </head>
 
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <nav id="athlete-nav">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div class="nav-container">
       <span class="nav-title">Ann Arbor Skyline Athletes</span>
       <a href="https://dulikim.github.io/si338-client-project-deliverable/" class="nav-link">
@@ -128,7 +128,7 @@
     <section id="athlete-gallery">
       <h2>Gallery</h2>
 
-      <article class="gallery-grid">
+      <article class="gallery-grid" tabindex="0" aria-label="Athlete photo gallery">
         <h3>Athlete Gallery Images</h3>
         {{ATHLETE_GALLERY_IMAGES}}
       </article>
@@ -151,9 +151,8 @@
         <span class="footer-year">2024</span>
       </p>
     </div>
+    <a href="#athlete-nav" class="back-to-top" aria-label="Back to top">&uarr;</a>
   </footer>
-
-  <a href="#athlete-nav" class="back-to-top" aria-label="Back to top">&uarr;</a>
 
 </body>
 

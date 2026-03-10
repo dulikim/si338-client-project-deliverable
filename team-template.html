@@ -10,9 +10,9 @@
 </head>
 
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <nav id="main-nav">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div class="nav-container">
       <a href="#team-roster" class="nav-link">Roster</a>
       <a href="#team-accomplishments" class="nav-link">Accomplishments</a>
@@ -132,7 +132,7 @@
     <section id="team-gallery">
       <h2>Team Gallery</h2>
 
-      <article class="gallery-grid">
+      <article class="gallery-grid" tabindex="0" aria-label="Team photo gallery">
         <h3>Gallery Images</h3>
         {{TEAM_GALLERY_IMAGES}}
       </article>
@@ -155,9 +155,8 @@
         <span class="footer-year">2024</span>
       </p>
     </div>
+    <a href="#main-nav" class="back-to-top" aria-label="Back to top">&uarr;</a>
   </footer>
-
-  <a href="#main-nav" class="back-to-top" aria-label="Back to top">&uarr;</a>
 
 </body>
 

@@ -247,7 +247,7 @@ a:focus {
 }
 
 .nav-link {
-  color: rgba(255, 255, 255, 0.85);
+  color: #fff;
   text-decoration: none;
   font-size: var(--fs-sm);
   font-weight: 600;
@@ -308,7 +308,6 @@ header h1 {
   font-size: var(--fs-sm);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  opacity: 0.8;
   margin-bottom: var(--sp-sm);
 }
 
@@ -331,17 +330,15 @@ header h1 {
 
 .athlete-school {
   font-size: var(--fs-md);
-  opacity: 0.9;
 }
 
 #athlete-header .athlete-grade {
   font-size: var(--fs-sm);
-  opacity: 0.85;
   color: #fff;
 }
 
 #athlete-header a {
-  color: var(--clr-secondary-light);
+  color: #fff;
   font-size: var(--fs-sm);
 }
 
@@ -497,7 +494,6 @@ section > h2::after {
 
 .card-back p {
   font-size: var(--fs-sm);
-  opacity: 0.9;
   margin: 0;
 }
 
@@ -908,7 +904,7 @@ tbody td::before {
    ---------------------------------------------------------------- */
 #site-footer {
   background: var(--clr-primary);
-  color: rgba(255, 255, 255, 0.85);
+  color: #fff;
   text-align: center;
   padding: var(--sp-lg) var(--sp-md);
   margin-top: var(--sp-xl);
