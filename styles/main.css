@@ -783,11 +783,6 @@ tbody td::before {
 #results-table td:nth-child(7)::before { content: 'Grade'; }
 #results-table td:nth-child(8)::before { content: 'Results'; }
 
-/* Hide the template placeholder row that was left in the data */
-#results-table tbody tr:first-child {
-  display: none;
-}
-
 /* --- Shared Meets Table column labels --- */
 .shared-meets td:nth-child(1)::before { content: 'Meet'; }
 .shared-meets td:nth-child(2)::before { content: 'Athlete A'; }
@@ -1027,6 +1022,13 @@ tbody td::before {
 /* ----------------------------------------------------------------
    20. Reduced Motion — Disables all animations for users who
    prefer it. Required for WCAG 2.1 Level AA compliance.
+
+   !important is intentionally used below per W3C/WCAG best practices.
+   prefers-reduced-motion MUST override ALL animations regardless of
+   specificity to protect users with vestibular disorders. Without
+   !important, higher-specificity animation rules elsewhere in this
+   stylesheet would still fire, defeating the accessibility purpose.
+   Reference: https://www.w3.org/WAI/WCAG21/Techniques/css/C39
    ---------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *,

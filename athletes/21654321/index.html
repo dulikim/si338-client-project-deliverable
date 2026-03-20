@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marcus Chen</title>
+  <link rel="stylesheet" href="../../styles/reset.css">
+  <link rel="stylesheet" href="../../styles/main.css">
+</head>
+
+<body>
+
+  <nav id="athlete-nav">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div class="nav-container">
+      <span class="nav-title">Ann Arbor Skyline Athletes</span>
+      <a href="../../index.html" class="nav-link">
+        Team roster
+      </a>
+    </div>
+  </nav>
+
+  <header id="athlete-header">
+    <article class="athlete-info">
+      <h2>Athlete Information</h2>
+
+      <h1>Marcus Chen</h1>
+
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%232a5a8c' width='100' height='100' rx='50'/%3E%3Ctext x='50' y='65' text-anchor='middle' fill='white' font-size='45' font-family='Georgia,serif'%3EM%3C/text%3E%3C/svg%3E" alt="Marcus Chen" class="athlete-photo" />
+
+      <p class="athlete-school">Ann Arbor Skyline</p>
+      <p class="athlete-grade">Current Grade: 10</p>
+
+      <a href="https://www.athletic.net/athlete/21654321/cross-country/">
+        Link to athlete.net account
+      </a>
+
+      <div class="athlete-records">
+        <p class="athlete-sr">Season Record (SR): 18:55.2</p>
+        <p class="athlete-pr">Personal Record (PR): 18:55.2</p>
+      </div>
+    </article>
+  </header>
+
+  <main id="main-content">
+
+    <section id="athlete-results">
+      <h2>Race Results</h2>
+
+      <div class="results-filters">
+        <form>
+          <fieldset>
+            <legend>Filter Race Results</legend>
+
+            <!-- aria-describedby on the inputs below links them to these
+                 supplementary instructions. Embedding this guidance inside
+                 each <label> would make them overly long; aria-describedby
+                 is the standard mechanism for associating help text with
+                 form controls. -->
+            <p id="filter-instructions">
+              Use the fields below to filter race results by name or date
+            </p>
+
+            <div class="filter-group">
+              <label for="filter-location">Search:</label>
+              <input type="text" id="filter-location" name="filter-location" placeholder="Filter by race name"
+                aria-describedby="filter-instructions" />
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-date">Date:</label>
+              <input type="date" id="filter-date" name="filter-date" aria-describedby="filter-instructions" />
+            </div>
+          </fieldset>
+        </form>
+      </div>
+
+      <article>
+        <h3>Race Results Table</h3>
+
+        <table id="results-table">
+          <thead>
+            <tr>
+              <th>Race Name</th>
+              <th>Date</th>
+              <th>Location</th>
+              <th>Distance</th>
+              <th>Time</th>
+              <th>Place</th>
+              <th>Grade</th>
+              <th>Results</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr><td>Lamplighter Invitational</td><td>Aug 15 2025</td><td>N/A</td><td>5K</td><td>19:08.4</td><td>78</td><td>10</td><td><a href="https://www.athletic.net/CrossCountry/meet/247194/results/1007644" target="_blank">View Results</a></td></tr>
+<tr><td>2nd Ann Arbor City Preview presented by AARC</td><td>Aug 27 2025</td><td>N/A</td><td>5K</td><td>18:55.2</td><td>22</td><td>10</td><td><a href="https://www.athletic.net/CrossCountry/meet/253860/results/1013715" target="_blank">View Results</a></td></tr>
+<tr><td>2024 Portage Invitational</td><td>Oct 5 2025</td><td>N/A</td><td>5K</td><td>19:22.7</td><td>198</td><td>10</td><td><a href="https://www.athletic.net/CrossCountry/meet/237295/results/948796" target="_blank">View Results</a></td></tr>
+<tr><td>37th Early Bird Open (HS Open 5K)</td><td>Aug 29 2024</td><td>N/A</td><td>5K</td><td>20:15.8</td><td>142</td><td>9</td><td><a href="https://www.athletic.net/CrossCountry/meet/235827/results/943367" target="_blank">View Results</a></td></tr>
+</tbody>
+        </table>
+      </article>
+    </section>
+
+    <section id="performance-graph">
+      <h2>Performance Progression</h2>
+
+      <div>
+        <!-- aria-describedby on the image below connects it to this
+             detailed description paragraph, providing richer context
+             than alt text alone can convey. There is no native HTML
+             attribute that links a separate description to an image. -->
+        <p id="graph-description">
+          This graph visualizes the athlete's race times across meets,
+          color-coded by grade.
+        </p>
+      </div>
+
+      <article>
+        <h3>Performance Graph</h3>
+
+        <img src="../../images/athletes/21654321/performance.png" alt="Performance progression chart showing race times by meet"
+          aria-describedby="graph-description" />
+      </article>
+    </section>
+
+    <section id="athlete-gallery">
+      <h2>Gallery</h2>
+
+      <!-- tabindex="0" makes this scrollable carousel keyboard-accessible.
+           aria-labelledby connects this region to its heading because an
+           <article> element does not automatically derive its accessible
+           name from child headings the way a <section> with aria-labelledby
+           would. Using role="region" ensures screen readers announce it as
+           a named landmark. -->
+      <article class="gallery-grid" tabindex="0" role="region" aria-labelledby="athlete-gallery-heading">
+        <h3 id="athlete-gallery-heading">Athlete Gallery Images</h3>
+        
+      </article>
+    </section>
+
+  </main>
+
+  <footer id="site-footer">
+    <div class="footer-content">
+      <p>
+        Ann Arbor Skyline Cross Country &middot;
+        Data sourced from
+        <a href="https://www.athletic.net" target="_blank" rel="noopener">
+          Athletic.net
+        </a>
+      </p>
+
+    </div>
+    <a href="#athlete-nav" class="back-to-top">
+      <span aria-hidden="true">&uarr;</span>
+      <span class="sr-only">Back to top</span>
+    </a>
+  </footer>
+
+  <script src="../../scripts/main.js"></script>
+
+</body>
+
+</html>
