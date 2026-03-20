@@ -1,2 +1,4 @@
-# Client Project Deliverable
+Client Project Deliverable
+
+By Duli Kim
 
