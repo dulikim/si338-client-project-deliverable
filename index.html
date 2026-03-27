@@ -30,6 +30,9 @@
 
     <section id="team-roster">
       <h2>The Athletes</h2>
+      <p id="card-instructions" class="sr-only">
+        Athlete cards can be flipped to reveal details. Select a card and press Enter or Space to toggle.
+      </p>
 
       <div id="sort-by-choices">
         <form>
@@ -56,7 +59,7 @@
         </form>
       </div>
 
-      <article id="athlete-roster">
+      <article id="athlete-roster" aria-describedby="card-instructions">
         <h3>Athlete Roster</h3>
             <div class="athlete-card"
          data-name="Garrett Comer"
@@ -243,12 +246,13 @@
               </select>
             </div>
 
-            <button type="button" id="compare-button">
+            <button type="button" id="compare-button" aria-controls="comparison-results">
               Compare
             </button>
           </fieldset>
         </form>
       </div>
+      <p id="compare-status" class="sr-only" role="status" aria-live="polite"></p>
 
       <article id="comparison-results">
         <h3>Comparison Results</h3>

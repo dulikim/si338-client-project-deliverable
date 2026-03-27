@@ -18,6 +18,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', function () {
+  hardenExternalLinks();
   initCardFlip();
   initSort();
   initFilter();
@@ -42,11 +43,31 @@ function initCardFlip() {
   var cards = document.querySelectorAll('.athlete-card');
 
   cards.forEach(function (card) {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-pressed', 'false');
+    if (!card.getAttribute('aria-label')) {
+      card.setAttribute('aria-label', 'Flip athlete card');
+    }
+
     card.addEventListener('click', function (e) {
       if (e.target.closest('a')) return;
-      card.classList.toggle('flipped');
+      toggleCard(card);
+    });
+
+    card.addEventListener('keydown', function (e) {
+      if (e.target.closest('a')) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleCard(card);
+      }
     });
   });
+}
+
+function toggleCard(card) {
+  var isFlipped = card.classList.toggle('flipped');
+  card.setAttribute('aria-pressed', isFlipped ? 'true' : 'false');
 }
 
 
@@ -194,6 +215,7 @@ function initCompare() {
     if (!a || !b) return;
 
     updateComparison(a, b);
+    announceComparisonResult(a, b);
   });
 }
 
@@ -229,11 +251,15 @@ function updateComparison(a, b) {
       '<div class="shared-meets">' +
       '<h3>Shared Meets</h3>' +
       '<table>' +
+      '<caption class="sr-only">Shared meet placements for ' + a.name + ' and ' + b.name + '</caption>' +
       '<thead><tr><th>Meet</th>' +
       '<th>' + a.name + ' Place</th>' +
       '<th>' + b.name + ' Place</th></tr></thead>' +
       '<tbody>' + sharedRows + '</tbody>' +
       '</table></div>';
+  } else {
+    sharedHTML =
+      '<p role="status">No shared meets found for the selected athletes.</p>';
   }
 
   container.innerHTML =
@@ -266,4 +292,24 @@ function esc(text) {
   var el = document.createElement('span');
   el.textContent = text;
   return el.innerHTML;
+}
+
+/**
+ * Adds rel attributes to all target="_blank" links to prevent
+ * reverse-tabnabbing and quiet accessibility/security warnings.
+ */
+function hardenExternalLinks() {
+  var externalLinks = document.querySelectorAll('a[target="_blank"]');
+  externalLinks.forEach(function (link) {
+    link.setAttribute('rel', 'noopener noreferrer');
+  });
+}
+
+/**
+ * Announces comparison updates in a polite live region.
+ */
+function announceComparisonResult(a, b) {
+  var status = document.getElementById('compare-status');
+  if (!status) return;
+  status.textContent = 'Updated comparison for ' + a.name + ' and ' + b.name + '.';
 }
