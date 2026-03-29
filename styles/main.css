@@ -932,6 +932,14 @@ tbody td::before {
   color: #fff;
 }
 
+/* Keep the floating back-to-top button high-contrast inside footer. */
+#site-footer .back-to-top,
+#site-footer .back-to-top:hover,
+#site-footer .back-to-top:focus,
+#site-footer .back-to-top:active {
+  color: #1a1a2e;
+}
+
 
 /* ----------------------------------------------------------------
    18. Back-to-Top Floating Action Button
