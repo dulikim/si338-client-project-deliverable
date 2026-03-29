@@ -43,31 +43,15 @@ function initCardFlip() {
   var cards = document.querySelectorAll('.athlete-card');
 
   cards.forEach(function (card) {
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('role', 'button');
-    card.setAttribute('aria-pressed', 'false');
-    if (!card.getAttribute('aria-label')) {
-      card.setAttribute('aria-label', 'Flip athlete card');
-    }
-
     card.addEventListener('click', function (e) {
       if (e.target.closest('a')) return;
       toggleCard(card);
-    });
-
-    card.addEventListener('keydown', function (e) {
-      if (e.target.closest('a')) return;
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleCard(card);
-      }
     });
   });
 }
 
 function toggleCard(card) {
-  var isFlipped = card.classList.toggle('flipped');
-  card.setAttribute('aria-pressed', isFlipped ? 'true' : 'false');
+  card.classList.toggle('flipped');
 }
 
 
@@ -275,7 +259,7 @@ function updateComparison(a, b) {
  */
 function comparisonCard(athlete) {
   return '<div class="comparison-card">' +
-    '<img src="' + athlete.profilePic + '" alt="' + athlete.name + '">' +
+    '<img src="' + athlete.profilePic + '" alt="" aria-hidden="true">' +
     '<h3>' + athlete.name + '</h3>' +
     '<p>Grade: ' + athlete.grade + '</p>' +
     '<p>Season Record: ' + athlete.sr + '</p>' +

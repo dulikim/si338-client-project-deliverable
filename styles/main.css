@@ -1039,7 +1039,7 @@ tbody td::before {
   }
 
   thead th {
-    background: var(--clr-primary);
+    background: var(--clr-nav-bg);
     color: #fff;
     font-size: var(--fs-sm);
     text-align: left;
