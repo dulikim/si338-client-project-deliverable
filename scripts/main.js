@@ -43,9 +43,22 @@ function initCardFlip() {
   var cards = document.querySelectorAll('.athlete-card');
 
   cards.forEach(function (card) {
+    // Make each card keyboard-focusable for non-pointer users.
+    if (!card.hasAttribute('tabindex')) {
+      card.setAttribute('tabindex', '0');
+    }
+
     card.addEventListener('click', function (e) {
       if (e.target.closest('a')) return;
       toggleCard(card);
+    });
+
+    card.addEventListener('keydown', function (e) {
+      if (e.target.closest('a')) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleCard(card);
+      }
     });
   });
 }

@@ -532,6 +532,14 @@ section > h2::after {
 /* ----------------------------------------------------------------
    11. Forms & Controls — Sort, Filter, Compare
    ---------------------------------------------------------------- */
+.form-section-heading {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  color: var(--clr-primary);
+  margin: 0 0 var(--sp-sm);
+}
+
 fieldset {
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-md);
@@ -1173,21 +1181,14 @@ tbody td::before {
 /* ----------------------------------------------------------------
    21. Reduced Motion — Disables all animations for users who
    prefer it. Required for WCAG 2.1 Level AA compliance.
-
-   !important is intentionally used below per W3C/WCAG best practices.
-   prefers-reduced-motion MUST override ALL animations regardless of
-   specificity to protect users with vestibular disorders. Without
-   !important, higher-specificity animation rules elsewhere in this
-   stylesheet would still fire, defeating the accessibility purpose.
-   Reference: https://www.w3.org/WAI/WCAG21/Techniques/css/C39
    ---------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+    scroll-behavior: auto;
   }
 }
